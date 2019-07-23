@@ -106,7 +106,15 @@ public class Game extends Pane {
     }
 
     public void refillStockFromDiscard() {
-        //TODO
+        for(Card card: deck) {
+            if (card.getContainingPile().getPileType() == Pile.PileType.DISCARD) {
+                card.moveToPile(stockPile);
+                card.flip();
+                card.setMouseTransparent(false);
+                System.out.println("Placed " + card + " to the waste.");
+            }
+        }
+
         System.out.println("Stock refilled from discard pile.");
     }
 
