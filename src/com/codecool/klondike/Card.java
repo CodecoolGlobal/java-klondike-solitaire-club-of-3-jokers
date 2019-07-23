@@ -44,6 +44,10 @@ public class Card extends ImageView {
         return rank;
     }
 
+    public String getColor(){
+        return color;
+    }
+
     public boolean isFaceDown() {
         return faceDown;
     }
@@ -80,18 +84,11 @@ public class Card extends ImageView {
     }
 
     public static boolean isOppositeColor(Card card1, Card card2) {
-        String color1 = card1.color;
-        String color2 = card2.color;
-
-        if(!color1.equals(color2)) {
-            return true;
-        }
-
-        return false;
+        return !card1.getColor().equals(card2.getColor());
     }
 
     public static boolean isSameSuit(Card card1, Card card2) {
-        return card1.getSuit() == card2.getSuit();
+        return card1.getSuit().equals(card2.getSuit());
     }
 
     public static List<Card> createNewDeck() {
