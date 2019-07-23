@@ -61,7 +61,7 @@ public class Game extends Pane {
         double offsetX = e.getSceneX() - dragStartX;
         double offsetY = e.getSceneY() - dragStartY;
 
-        draggedCards.clear();
+        draggedCards.clear();  //?
         draggedCards.add(card);
 
         card.getDropShadow().setRadius(20);

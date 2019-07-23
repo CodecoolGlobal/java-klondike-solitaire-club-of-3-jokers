@@ -75,7 +75,7 @@ public class Card extends ImageView {
     @Override
     public String toString() {
         return "The " + "Rank" + rank + " of " + "Suit" + suit;
-    }
+    }  //why are overridden toStings ?
 
     public static boolean isOppositeColor(Card card1, Card card2) {
         //TODO
@@ -99,10 +99,10 @@ public class Card extends ImageView {
     public static void loadCardImages() {
         cardBackImage = new Image("card_images/card_back.png");
         String suitName = "";
-        for (int suit = 1; suit < 5; suit++) {
+        for (int suit = 1; suit < 5; suit++) {    //suit.itAll
             switch (suit) {
                 case 1:
-                    suitName = "hearts";
+                    suitName = "hearts";  //suit.
                     break;
                 case 2:
                     suitName = "diamonds";
