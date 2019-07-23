@@ -7,6 +7,9 @@ import javafx.scene.paint.Color;
 
 import java.util.*;
 
+import static java.util.Collections.shuffle;
+
+
 public class Card extends ImageView {
 
     private String suit;
@@ -95,32 +98,18 @@ public class Card extends ImageView {
                 result.add(new Card(suit.getSuitName(), suit.getColor(), rank.getRank(), true));
             }
         }
+
+        shuffle(result);
         return result;
+
+
     }
+
+
 
     public static void loadCardImages() {
         cardBackImage = new Image("card_images/card_back.png");
         String suitName = "";
-<<<<<<< HEAD
-        for (int suit = 1; suit < 5; suit++) {    //suit.itAll
-            switch (suit) {
-                case 1:
-                    suitName = "hearts";  //suit.
-                    break;
-                case 2:
-                    suitName = "diamonds";
-                    break;
-                case 3:
-                    suitName = "spades";
-                    break;
-                case 4:
-                    suitName = "clubs";
-                    break;
-            }
-            for (int rank = 1; rank < 14; rank++) {
-                String cardName = suitName + rank;
-                String cardId = "S" + suit + "R" + rank;
-
         for (EnumSuit suit : EnumSuit.values()) {
             suitName = suit.getSuitName();
             for (EnumRank rank : EnumRank.values()) {

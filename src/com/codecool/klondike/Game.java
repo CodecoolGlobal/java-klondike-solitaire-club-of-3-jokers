@@ -98,6 +98,8 @@ public class Game extends Pane {
         dealCards();
     }
 
+
+
     public void addMouseEventHandlers(Card card) {
         card.setOnMousePressed(onMousePressedHandler);
         card.setOnMouseDragged(onMouseDraggedHandler);
