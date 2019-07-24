@@ -146,8 +146,18 @@ public class Game extends Pane {
             msg = String.format("Placed %s to %s.", card, destPile.getTopCard());
         }
         System.out.println(msg);
+        autoCardFlip(card);
         MouseUtil.slideToDest(draggedCards, destPile);
         draggedCards.clear();
+    }
+
+    private void autoCardFlip(Card card){
+        Pile current = card.getContainingPile();
+        if (current.getPileType() != Pile.PileType.DISCARD && current.getCards().size() > 1) {
+            if (current.getCards().get(current.getCards().size() - 2).isFaceDown()) {
+                current.getCards().get(current.getCards().size() - 2).flip();
+            }
+        }
     }
 
 
