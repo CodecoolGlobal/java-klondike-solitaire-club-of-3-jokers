@@ -88,7 +88,15 @@ public class Game extends Pane {
     };
 
     public boolean isGameWon() {
-        //TODO
+        int counter = 0;
+        for(Pile pile: tableauPiles){
+           if(pile.getTopCard() != null && pile.getTopCard().getRank() == 13){
+               counter += 1;
+           }
+        }
+        if(counter == 3) {
+            return true;
+        }
         return false;
     }
 
@@ -111,10 +119,8 @@ public class Game extends Pane {
                 card.moveToPile(stockPile);
                 card.flip();
                 card.setMouseTransparent(false);
-                System.out.println("Placed " + card + " to the waste.");
             }
         }
-
         System.out.println("Stock refilled from discard pile.");
     }
 
@@ -153,8 +159,15 @@ public class Game extends Pane {
         System.out.println(msg);
         MouseUtil.slideToDest(draggedCards, destPile);
         draggedCards.clear();
+
+        if(destPile.getPileType().equals(Pile.PileType.TABLEAU) && isGameWon()){
+            alertWin();
+        }
     }
 
+    private void alertWin() {
+        System.out.println("YOU WON!");
+    }
 
     private void initPiles() {
         stockPile = new Pile(Pile.PileType.STOCK, "Stock", STOCK_GAP);
