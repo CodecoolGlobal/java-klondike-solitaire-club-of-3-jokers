@@ -146,8 +146,6 @@ public class Game extends Pane {
             }
         }
         if (destPile.getPileType() == FOUNDATION) {
-            System.out.println();
-
             if (destPile.getTopCard() == null && card.getRank() == 1) {
                 allowed = true;
             }
@@ -159,7 +157,6 @@ public class Game extends Pane {
                 }
             }
         }
-
         return allowed;
     }
 

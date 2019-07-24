@@ -79,14 +79,9 @@ public class Card extends ImageView {
         destPile.addCard(this);
     }
 
-
     public void flip() {
         faceDown = !faceDown;
         setImage(faceDown ? backFace : frontFace);
-    }
-
-    public String getColor(){
-        return color;
     }
 
     @Override
@@ -109,13 +104,9 @@ public class Card extends ImageView {
                 result.add(new Card(suit.getSuitName(), suit.getColor(), rank.getRank(), true));
             }
         }
-
-        //shuffle(result);
+        shuffle(result);
         return result;
-
-
     }
-
 
     public static void loadCardImages() {
         cardBackImage = new Image("card_images/card_back.png");
