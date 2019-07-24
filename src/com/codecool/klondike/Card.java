@@ -49,6 +49,10 @@ public class Card extends ImageView {
         return rank;
     }
 
+    public String getColor() {
+        return color;
+    }
+
     public boolean isFaceDown() {
         return faceDown;
     }
@@ -87,8 +91,8 @@ public class Card extends ImageView {
 
     @Override
     public String toString() {
-        return "The " + "Rank" + rank + " of " + "Suit" + suit;
-    }  //why are overridden toStings ?
+        return "Rank: " + rank + " of " + "Suit: " + suit;
+    }
 
     public static boolean isOppositeColor(Card card1, Card card2) {
         return !card1.getColor().equals(card2.getColor());
