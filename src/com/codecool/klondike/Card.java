@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 
 import java.util.*;
 
+import static com.codecool.klondike.Pile.PileType.FOUNDATION;
+import static com.codecool.klondike.Pile.PileType.TABLEAU;
 import static java.util.Collections.shuffle;
 
 
@@ -68,13 +70,19 @@ public class Card extends ImageView {
     }
 
     public void moveToPile(Pile destPile) {
+
         this.getContainingPile().getCards().remove(this);
         destPile.addCard(this);
     }
 
+
     public void flip() {
         faceDown = !faceDown;
         setImage(faceDown ? backFace : frontFace);
+    }
+
+    public String getColor(){
+        return color;
     }
 
     @Override
@@ -83,12 +91,11 @@ public class Card extends ImageView {
     }  //why are overridden toStings ?
 
     public static boolean isOppositeColor(Card card1, Card card2) {
-        //TODO
-        return true;
+        return !card1.getColor().equals(card2.getColor());
     }
 
     public static boolean isSameSuit(Card card1, Card card2) {
-        return card1.getSuit() == card2.getSuit();
+        return card1.getSuit().equals(card2.getSuit());
     }
 
     public static List<Card> createNewDeck() {
@@ -99,12 +106,11 @@ public class Card extends ImageView {
             }
         }
 
-        shuffle(result);
+        //shuffle(result);
         return result;
 
 
     }
-
 
 
     public static void loadCardImages() {

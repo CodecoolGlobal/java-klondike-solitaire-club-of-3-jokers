@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.codecool.klondike.Pile.PileType.TABLEAU;
+
 public class Game extends Pane {
 
     private List<Card> deck = new ArrayList<>();
@@ -83,7 +85,7 @@ public class Game extends Pane {
             handleValidMove(card, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards = null;
+//            draggedCards = null;
         }
     };
 
@@ -113,8 +115,22 @@ public class Game extends Pane {
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
-        //TODO
-        return true;
+        boolean allowed = false;
+        if (destPile.getPileType() == TABLEAU) {
+            if (destPile.getTopCard() == null && card.getRank() == 13){
+                allowed = true;
+            }
+            if (destPile.getTopCard() != null) {
+                System.out.println(card.getColor());
+                System.out.println(destPile.getTopCard().getColor());
+                if (card.isOppositeColor(card,destPile.getTopCard()) && card.getRank() == destPile.getTopCard().getRank()-1) {
+                    allowed = true;
+                } else {
+                    allowed = false;
+                }
+            }
+        }
+        return allowed;
     }
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
         Pile result = null;

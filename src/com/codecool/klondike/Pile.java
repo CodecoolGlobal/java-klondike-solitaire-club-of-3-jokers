@@ -57,6 +57,7 @@ public class Pile extends Pane {
         card.setContainingPile(this);
         card.toFront();
         layoutCard(card);
+        System.out.println("layouted");
     }
 
     private void layoutCard(Card card) {
