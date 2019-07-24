@@ -27,9 +27,7 @@ public class Pile extends Pane {
         return pileType;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public double getCardGap() {
         return cardGap;
