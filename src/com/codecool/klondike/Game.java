@@ -2,6 +2,7 @@ package com.codecool.klondike;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableArray;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -114,6 +116,7 @@ public class Game extends Pane {
         //TODO
         return true;
     }
+
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
         Pile result = null;
         for (Pile pile : piles) {
@@ -182,13 +185,25 @@ public class Game extends Pane {
 
     public void dealCards() {
         Iterator<Card> deckIterator = deck.iterator();
-        //TODO
+
+        int nextCardIndex = 0;
+        int j;
+        for (int i = 0; i < tableauPiles.size(); i++) {
+            for (j = nextCardIndex; j < nextCardIndex + i + 1; j++) {
+                Card card = deckIterator.next();
+                tableauPiles.get(i).addCard(card);
+                addMouseEventHandlers(card);
+                getChildren().add(card);
+            }
+            tableauPiles.get(i).getTopCard().flip();
+            nextCardIndex = j;
+        }
+
         deckIterator.forEachRemaining(card -> {
             stockPile.addCard(card);
             addMouseEventHandlers(card);
             getChildren().add(card);
         });
-
     }
 
     public void setTableBackground(Image tableBackground) {
