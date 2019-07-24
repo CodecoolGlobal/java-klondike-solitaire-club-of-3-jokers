@@ -44,6 +44,10 @@ public class Card extends ImageView {
         return rank;
     }
 
+    public String getColor() {
+        return color;
+    }
+
     public boolean isFaceDown() {
         return faceDown;
     }
@@ -76,16 +80,15 @@ public class Card extends ImageView {
 
     @Override
     public String toString() {
-        return "The " + "Rank" + rank + " of " + "Suit" + suit;
-    }  //why are overridden toStings ?
+        return "Rank: " + rank + " of " + "Suit: " + suit;
+    }
 
     public static boolean isOppositeColor(Card card1, Card card2) {
-        //TODO
-        return true;
+        return !card1.getColor().equals(card2.getColor());
     }
 
     public static boolean isSameSuit(Card card1, Card card2) {
-        return card1.getSuit() == card2.getSuit();
+        return card1.getSuit().equals(card2.getSuit());
     }
 
     public static List<Card> createNewDeck() {
@@ -101,26 +104,6 @@ public class Card extends ImageView {
     public static void loadCardImages() {
         cardBackImage = new Image("card_images/card_back.png");
         String suitName = "";
-<<<<<<< HEAD
-        for (int suit = 1; suit < 5; suit++) {    //suit.itAll
-            switch (suit) {
-                case 1:
-                    suitName = "hearts";  //suit.
-                    break;
-                case 2:
-                    suitName = "diamonds";
-                    break;
-                case 3:
-                    suitName = "spades";
-                    break;
-                case 4:
-                    suitName = "clubs";
-                    break;
-            }
-            for (int rank = 1; rank < 14; rank++) {
-                String cardName = suitName + rank;
-                String cardId = "S" + suit + "R" + rank;
-
         for (EnumSuit suit : EnumSuit.values()) {
             suitName = suit.getSuitName();
             for (EnumRank rank : EnumRank.values()) {

@@ -27,9 +27,7 @@ public class Pile extends Pane {
         return pileType;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public double getCardGap() {
         return cardGap;
@@ -40,8 +38,8 @@ public class Pile extends Pane {
     }
 
     public int numOfCards() {
-        //TODO
-        return 1;
+        int numberOfCards = cards.size();
+        return numberOfCards;
     }
 
     public boolean isEmpty() {
@@ -49,7 +47,7 @@ public class Pile extends Pane {
     }
 
     public void clear() {
-        //TODO
+        cards.clear();
     }
 
     public void addCard(Card card) {
