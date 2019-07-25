@@ -42,7 +42,8 @@ public class Game extends Pane {
 
     private EventHandler<MouseEvent> onMouseClickedHandler = e -> {
         Card card = (Card) e.getSource();
-        if (card.getContainingPile().getPileType() == Pile.PileType.STOCK) {
+        Pile containingPile = card.getContainingPile();
+        if (containingPile.getPileType() == Pile.PileType.STOCK && containingPile.getTopCard().equals(card)) {
             card.moveToPile(discardPile);
             card.flip();
             card.setMouseTransparent(false);
@@ -64,19 +65,21 @@ public class Game extends Pane {
         Pile activePile = card.getContainingPile();
         if (activePile.getPileType() == Pile.PileType.STOCK)
             return;
-        double offsetX = e.getSceneX() - dragStartX;
-        double offsetY = e.getSceneY() - dragStartY;
+        if (isCardValid(card, activePile)) {
+            double offsetX = e.getSceneX() - dragStartX;
+            double offsetY = e.getSceneY() - dragStartY;
 
-        draggedCards.clear();  //?
-        draggedCards.add(card);
+            draggedCards.clear();  //?
+            draggedCards.add(card);
 
-        card.getDropShadow().setRadius(20);
-        card.getDropShadow().setOffsetX(10);
-        card.getDropShadow().setOffsetY(10);
+            card.getDropShadow().setRadius(20);
+            card.getDropShadow().setOffsetX(10);
+            card.getDropShadow().setOffsetY(10);
 
-        card.toFront();
-        card.setTranslateX(offsetX);
-        card.setTranslateY(offsetY);
+            card.toFront();
+            card.setTranslateX(offsetX);
+            card.setTranslateY(offsetY);
+        }
     };
 
     private EventHandler<MouseEvent> onMouseReleasedHandler = e -> {
@@ -289,4 +292,18 @@ public class Game extends Pane {
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
     }
 
+    public boolean isCardValid(Card card, Pile pile){
+        Pile.PileType pileType = pile.getPileType();
+        Card topCard = pile.getTopCard();
+
+        if (pileType == Pile.PileType.DISCARD && topCard.equals(card)){
+            return true;
+        } else if (pileType == Pile.PileType.FOUNDATION && topCard.equals(card)){
+            return true;
+        } else if (pileType == Pile.PileType.TABLEAU && !card.isFaceDown()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
