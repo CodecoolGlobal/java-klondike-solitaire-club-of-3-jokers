@@ -211,8 +211,9 @@ public class Game extends Pane {
 
     private void alertWin() {
         System.out.println("YOU WON!");
-        Alert alert = new Alert(Alert.AlertType.NONE);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("YOU WON.");
+        alert.setHeaderText(null);
         alert.setContentText("WINNER WINNER CHICKEN DINNER!");
 
         alert.showAndWait();
