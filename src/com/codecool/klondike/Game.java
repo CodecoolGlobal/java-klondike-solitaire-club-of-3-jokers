@@ -1,12 +1,16 @@
 package com.codecool.klondike;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableArray;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -17,10 +21,7 @@ import javafx.scene.layout.Pane;
 
 import javax.sound.midi.Soundbank;
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import static com.codecool.klondike.Pile.PileType.FOUNDATION;
 import static com.codecool.klondike.Pile.PileType.TABLEAU;
@@ -222,13 +223,28 @@ public class Game extends Pane {
     }
 
     private void alertWin() {
-        System.out.println("YOU WON!");
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        ButtonType yes = new ButtonType("YES", ButtonBar.ButtonData.OK_DONE);
+        ButtonType no = new ButtonType("NO", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert alert = new Alert(Alert.AlertType.WARNING,
+                "WINNER WINNER CHICKEN DINNER!\n\nWant to play again?\n\nPress YES to play!\nPress NO to quit.",
+                yes,
+                no);
         alert.setTitle("YOU WON.");
         alert.setHeaderText(null);
-        alert.setContentText("WINNER WINNER CHICKEN DINNER!");
+        ImageView icon = new ImageView("alert/leo.gif");
+        icon.setFitHeight(250);
+        icon.setFitWidth(400);
 
-        alert.showAndWait();
+        alert.getDialogPane().setGraphic(icon);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+
+        if (result.get() == yes){
+            restartGame();
+        } else if (result.get() == no){
+            Platform.exit();
+        }
     }
 
     private void autoCardFlip(Card card) {
