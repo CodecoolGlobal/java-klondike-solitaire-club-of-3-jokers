@@ -43,7 +43,8 @@ public class Game extends Pane {
 
     private EventHandler<MouseEvent> onMouseClickedHandler = e -> {
         Card card = (Card) e.getSource();
-        if (card.getContainingPile().getPileType() == Pile.PileType.STOCK) {
+        Pile containingPile = card.getContainingPile();
+        if (containingPile.getPileType() == Pile.PileType.STOCK && containingPile.getTopCard().equals(card)) {
             card.moveToPile(discardPile);
             card.flip();
             card.setMouseTransparent(false);
@@ -69,20 +70,23 @@ public class Game extends Pane {
         int draggedCardIndex = activePile.getCards().indexOf(card);
 
         draggedCards.clear();
-        for (int i = draggedCardIndex; i < activePile.getCards().size(); i++) {
-            double offsetX = e.getSceneX() - dragStartX;
-            double offsetY = e.getSceneY() - dragStartY;
+        if (isCardValid(card, activePile)) {
+            for (int i = draggedCardIndex; i < activePile.getCards().size(); i++) {
 
-            card = activePile.getCards().get(i);
-            draggedCards.add(card);
+                double offsetX = e.getSceneX() - dragStartX;
+                double offsetY = e.getSceneY() - dragStartY;
 
-            card.getDropShadow().setRadius(20);
-            card.getDropShadow().setOffsetX(10);
-            card.getDropShadow().setOffsetY(10);
+                card = activePile.getCards().get(i);
+                draggedCards.add(card);
 
-            card.toFront();
-            card.setTranslateX(offsetX);
-            card.setTranslateY(offsetY);
+                card.getDropShadow().setRadius(20);
+                card.getDropShadow().setOffsetX(10);
+                card.getDropShadow().setOffsetY(10);
+
+                card.toFront();
+                card.setTranslateX(offsetX);
+                card.setTranslateY(offsetY);
+            }
         }
     };
 
@@ -217,8 +221,9 @@ public class Game extends Pane {
 
     private void alertWin() {
         System.out.println("YOU WON!");
-        Alert alert = new Alert(Alert.AlertType.NONE);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("YOU WON.");
+        alert.setHeaderText(null);
         alert.setContentText("WINNER WINNER CHICKEN DINNER!");
 
         alert.showAndWait();
@@ -226,8 +231,8 @@ public class Game extends Pane {
 
     private void autoCardFlip(Card card) {
         Pile current = card.getContainingPile();
-        if (current.getPileType() != Pile.PileType.DISCARD && current.getCards().size() > 1) {
-            int flippingCardIndex = current.numOfCards() - draggedCards.size() - 1;
+        int flippingCardIndex = current.numOfCards() - draggedCards.size() - 1;
+        if (current.getPileType() != Pile.PileType.DISCARD  && flippingCardIndex >= 0) {
             if (current.getCards().get(flippingCardIndex).isFaceDown()) {
                 current.getCards().get(flippingCardIndex).flip();
             }
@@ -295,4 +300,18 @@ public class Game extends Pane {
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
     }
 
+    public boolean isCardValid(Card card, Pile pile) {
+        Pile.PileType pileType = pile.getPileType();
+        Card topCard = pile.getTopCard();
+
+        if (pileType == Pile.PileType.DISCARD && topCard.equals(card)) {
+            return true;
+        } else if (pileType == Pile.PileType.FOUNDATION && topCard.equals(card)) {
+            return true;
+        } else if (pileType == Pile.PileType.TABLEAU && !card.isFaceDown()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
