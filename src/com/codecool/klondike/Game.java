@@ -5,6 +5,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableArray;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -131,6 +132,7 @@ public class Game extends Pane {
         deck = Card.createNewDeck();
         initPiles();
         dealCards();
+        createButton();
     }
 
     public void addMouseEventHandlers(Card card) {
@@ -313,5 +315,27 @@ public class Game extends Pane {
         } else {
             return false;
         }
+    }
+
+    public void createButton() {
+            Button restartButton = new Button("RESTART");
+            getChildren().add(restartButton);
+            restartButton.setOnMouseClicked(event -> {
+                restartGame();
+            });
+    }
+
+    public void restartGame(){
+        tableauPiles.clear();
+        foundationPiles.clear();
+        stockPile.clear();
+        discardPile.clear();
+        deck.clear();
+        getChildren().clear();
+
+        deck = Card.createNewDeck();
+        initPiles();
+        dealCards();
+        createButton();
     }
 }
